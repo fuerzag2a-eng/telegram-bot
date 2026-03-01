@@ -1,18 +1,20 @@
 const TelegramBot = require('node-telegram-bot-api');
+
+// Tu token de Telegram lo pondrás como variable de entorno en Railway
 const token = process.env.TOKEN;
 
 const bot = new TelegramBot(token, { polling: true });
 
-// Escuchar todos los mensajes
+// Detectar /start en cualquier chat
 bot.on('message', (msg) => {
-  const text = msg.text;      // el texto del mensaje
-  const chatId = msg.chat.id; // el chat donde se envió
+  const chatId = msg.chat.id;
+  const text = msg.text;
 
-  // Detectar /start sin depender de BotFather
+  // Detectar /start
   if (text && text.toLowerCase() === '/start') {
     bot.sendMessage(chatId, "¡Hola! Soy tu bot activo 🚀");
   }
 
-  // Opcional: ver todos los mensajes en Logs de Railway
+  // Para depurar: ver todos los mensajes que llegan
   console.log(chatId, text);
 });
